@@ -1,3 +1,4 @@
+/* Regina Lin, CS 211, 5/29/2023, ID: 202869488, The following program evaluates the postfix of the math expression */
 import java.util.Stack;
 
 public class PostfixEvaluation {
@@ -15,27 +16,22 @@ public class PostfixEvaluation {
                 // handle single and multi digit numbers
                 if (i != 0 && (Character.isDigit((postfix.charAt(i+1))) || Character.isDigit((postfix.charAt(i-1))))) {
                     number = number + token;
-                    System.out.println("added new digit " + token + " to number " + number);
                 } else if (i == 0 && Character.isDigit((postfix.charAt(i+1)))) {
                     number = number + token;
-                    System.out.println("added new digit " + token + " to number " + number);
                 }
                 else {
                     stack.push((int)(token - '0'));
-                    System.out.println("pushed singal digit: " + token);
                 }
-                System.out.println(stack.toString());
             } else if (token == ' ' && !number.isEmpty()) {
                 // push multi digit number if applicable
                 stack.push(Integer.parseInt(number));
-                System.out.println("pushed multi digit: " + number);
                 number = ""; // reset number string
-            } else if (token != ' ') {
+            } else if (token != ' ') { // handle operands
                 int value1 = stack.pop();
                 int value2 = stack.pop();
+                // mathematical logic
                 if (token == '+') {
                     result = value2 + value1;
-                    System.out.println(value2 + " + " +  value1 + " = " + result);
                     stack.push(result);
                 } else if (token == '-') {
                     result = value2 - value1;
@@ -49,7 +45,7 @@ public class PostfixEvaluation {
                 }
             }
         }
-        result = stack.pop();
+        result = stack.pop(); // record final result
         return result;
     }
 }
